@@ -20,29 +20,30 @@ let INGREDIENTES_LIBRES = [
 const PRECIOS_PAN_BOCADILLO = {
     "Montadito": { normal: 1, sinGluten: 1.5 },
     "Medio Bocadillo": { normal: 1.5, sinGluten: 2 },
-    "Bocadillo o Tostada": { normal: 2, sinGluten: 3 }
+    "Bocadillo": { normal: 2, sinGluten: 3 },
+    "Tostada": { normal: 2, sinGluten: 3 }
 };
 
 const PRODUCTOS_MONTADITOS = [
-    { nombre: "Sobrasada", precios: { Montadito: 2, "Medio Bocadillo": 2.5, "Bocadillo o Tostada": 3.5 } },
-    { nombre: "Jamón York", precios: { Montadito: 2, "Medio Bocadillo": 3, "Bocadillo o Tostada": 4 } },
-    { nombre: "Bacon", precios: { Montadito: 2, "Medio Bocadillo": 3, "Bocadillo o Tostada": 4 } },
-    { nombre: "Queso con anchoa", precios: { Montadito: 2, "Medio Bocadillo": 3, "Bocadillo o Tostada": 4 } },
-    { nombre: "Lomo", precios: { Montadito: 2, "Medio Bocadillo": 3.5, "Bocadillo o Tostada": 5 } },
-    { nombre: "Atún", precios: { Montadito: 2.5, "Medio Bocadillo": 3, "Bocadillo o Tostada": 4.5 } },
-    { nombre: "Catalana", precios: { Montadito: 2.5, "Medio Bocadillo": 3.5, "Bocadillo o Tostada": 5 } },
-    { nombre: "Chorizo", precios: { Montadito: 2.5, "Medio Bocadillo": 4, "Bocadillo o Tostada": 6 } },
-    { nombre: "Tocino", precios: { Montadito: 2.5, "Medio Bocadillo": 4, "Bocadillo o Tostada": 6 } },
-    { nombre: "Longaniza", precios: { Montadito: 2.5, "Medio Bocadillo": 4, "Bocadillo o Tostada": 6 } },
-    { nombre: "Pastor", precios: { Montadito: 2.5, "Medio Bocadillo": 4, "Bocadillo o Tostada": 6 } },
-    { nombre: "Tradicional", precios: { Montadito: 3, "Medio Bocadillo": 4, "Bocadillo o Tostada": 5 } },
-    { nombre: "Especial", precios: { Montadito: 3, "Medio Bocadillo": 4, "Bocadillo o Tostada": 5 } },
-    { nombre: "Morcilla", precios: { Montadito: 3, "Medio Bocadillo": 4, "Bocadillo o Tostada": 6 } },
-    { nombre: "Serranito", precios: { Montadito: 3, "Medio Bocadillo": 4, "Bocadillo o Tostada": 6.5 } },
-    { nombre: "Especial Ana", precios: { Montadito: 3.5, "Medio Bocadillo": 4, "Bocadillo o Tostada": 6 } },
-    { nombre: "Salmón", precios: { Montadito: 4, "Medio Bocadillo": 5, "Bocadillo o Tostada": 6 } },
-    { nombre: "Eloy", precios: { Montadito: 3.5, "Medio Bocadillo": 5, "Bocadillo o Tostada": 7 } },
-    { nombre: "Blanco y Negro", precios: { Montadito: 3.5, "Medio Bocadillo": 5, "Bocadillo o Tostada": 7 } }
+    { nombre: "Sobrasada", precios: { Montadito: 2, "Medio Bocadillo": 2.5, Bocadillo: 3.5, Tostada: 3.5 } },
+    { nombre: "Jamón York", precios: { Montadito: 2, "Medio Bocadillo": 3, Bocadillo: 4, Tostada: 4 } },
+    { nombre: "Bacon", precios: { Montadito: 2, "Medio Bocadillo": 3, Bocadillo: 4, Tostada: 4 } },
+    { nombre: "Queso con anchoa", precios: { Montadito: 2, "Medio Bocadillo": 3, Bocadillo: 4, Tostada: 4 } },
+    { nombre: "Lomo", precios: { Montadito: 2, "Medio Bocadillo": 3.5, Bocadillo: 5, Tostada: 5 } },
+    { nombre: "Atún", precios: { Montadito: 2.5, "Medio Bocadillo": 3, Bocadillo: 4.5, Tostada: 4.5 } },
+    { nombre: "Catalana", precios: { Montadito: 2.5, "Medio Bocadillo": 3.5, Bocadillo: 5, Tostada: 5 } },
+    { nombre: "Chorizo", precios: { Montadito: 2.5, "Medio Bocadillo": 4, Bocadillo: 6, Tostada: 6 } },
+    { nombre: "Tocino", precios: { Montadito: 2.5, "Medio Bocadillo": 4, Bocadillo: 6, Tostada: 6 } },
+    { nombre: "Longaniza", precios: { Montadito: 2.5, "Medio Bocadillo": 4, Bocadillo: 6, Tostada: 6 } },
+    { nombre: "Pastor", precios: { Montadito: 2.5, "Medio Bocadillo": 4, Bocadillo: 6, Tostada: 6 } },
+    { nombre: "Tradicional", precios: { Montadito: 3, "Medio Bocadillo": 4, Bocadillo: 5, Tostada: 5 } },
+    { nombre: "Especial", precios: { Montadito: 3, "Medio Bocadillo": 4, Bocadillo: 5, Tostada: 5 } },
+    { nombre: "Morcilla", precios: { Montadito: 3, "Medio Bocadillo": 4, Bocadillo: 6, Tostada: 6 } },
+    { nombre: "Serranito", precios: { Montadito: 3, "Medio Bocadillo": 4, Bocadillo: 6.5, Tostada: 6.5 } },
+    { nombre: "Especial Ana", precios: { Montadito: 3.5, "Medio Bocadillo": 4, Bocadillo: 6, Tostada: 6 } },
+    { nombre: "Salmón", precios: { Montadito: 4, "Medio Bocadillo": 5, Bocadillo: 6, Tostada: 6 } },
+    { nombre: "Eloy", precios: { Montadito: 3.5, "Medio Bocadillo": 5, Bocadillo: 7, Tostada: 7 } },
+    { nombre: "Blanco y Negro", precios: { Montadito: 3.5, "Medio Bocadillo": 5, Bocadillo: 7, Tostada: 7 } }
 ];
 
 const PRODUCTOS_INDIVIDUALES = [

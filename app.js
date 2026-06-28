@@ -427,7 +427,7 @@ function seleccionarProductoMontadito(prod) {
     
     let formatosHTML = formatos.map(f => {
         const precio = prod.precios[f];
-        const extraSG = (f === "Bocadillo o Tostada" || f === "Medio Bocadillo") ? 1.5 : 1;
+        const extraSG = (f === "Bocadillo" || f === "Tostada" || f === "Medio Bocadillo") ? 1.5 : 1;
         return `<div class="formato-item" onclick='seleccionarFormatoMontadito("${prod.nombre}","${f}",${precio},${extraSG})'><span>${f}</span><span class="precio-tag">${precio.toFixed(2)}€</span></div>`;
     }).join('');
     
