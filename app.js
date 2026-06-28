@@ -47,7 +47,7 @@ function mostrarInicio() {
     app.innerHTML = `
         <div class="pantalla inicio">
             <div class="header"><h1>🍷 Bar La Bodegaaaa</h1></div>
-            <p class="subtitulo">Selecciona un salónnnn</p>
+            <p class="subtitulo">Selecciona un salón</p>
             <div class="salones-grid" id="salonesGrid"></div>
             <div class="botones-flotantes"><button class="btn-secundario" onclick="mostrarHistorial()">📋 Historial</button></div>
         </div>
