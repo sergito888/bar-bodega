@@ -92,7 +92,6 @@ function mostrarPersonas(salon) {
             const tienePedido = p.data.productos && p.data.productos.length > 0;
             personasHTML += `
                 <div class="persona-card ${tienePedido ? 'persona-ocupada' : 'persona-libre'}" onclick="seleccionarPersona('${p.nombre}')">
-                    <div class="mesa-actions"><button class="mesa-btn-action" onclick="event.stopPropagation(); eliminarPersona('${p.nombre}')" title="Eliminar">🗑️</button></div>
                     <div class="mesa-numero">${p.nombre}</div>
                     <div class="mesa-estado">${tienePedido ? '📍 Con pedido' : '✅ Libre'}</div>
                     ${tienePedido ? `<div class="mesa-total">${p.data.total.toFixed(2)}€</div>` : ''}
@@ -104,7 +103,12 @@ function mostrarPersonas(salon) {
     
     app.innerHTML = `
         <div class="pantalla mesas">
-            <div class="header"><button class="btn-volver" onclick="mostrarInicio()">←</button><h2>${salon.replace(/[🛍️]\s*/, '')}</h2><button class="btn-agregar" onclick="agregarPersona()" title="Nueva persona">+</button></div>
+            <div class="header"><button class="btn-volver" onclick="mostrarInicio()">←</button><h2>${salon.replace(/[🛍️]\s*/, '')}</h2>
+                <div style="display:flex;gap:6px;">
+                    <button class="btn-agregar" onclick="modoBorrarPersona()" title="Borrar persona" style="font-size:0.9em;">🗑️</button>
+                    <button class="btn-agregar" onclick="agregarPersona()" title="Nueva persona">+</button>
+                </div>
+            </div>
             <p class="subtitulo">Selecciona una persona o crea una nueva</p>
             ${personasHTML}
         </div>
@@ -182,7 +186,13 @@ function mostrarMesas(salon) {
     
     app.innerHTML = `
         <div class="pantalla mesas">
-            <div class="header"><button class="btn-volver" onclick="mostrarInicio()">←</button><h2>${salon.replace(/[🌿🏠🍸]\s*/, '')}</h2><button class="btn-agregar" onclick="agregarMesa()" title="Añadir mesa">+</button></div>
+            <div class="header"><button class="btn-volver" onclick="mostrarInicio()">←</button><h2>${salon.replace(/[🌿🏠🍸]\s*/, '')}</h2>
+                <div style="display:flex;gap:6px;">
+                    <button class="btn-agregar" onclick="modoEditarMesa()" title="Editar mesas" style="font-size:0.9em;">✏️</button>
+                    <button class="btn-agregar" onclick="modoBorrarMesa()" title="Borrar mesas" style="font-size:0.9em;">🗑️</button>
+                    <button class="btn-agregar" onclick="agregarMesa()" title="Añadir mesa">+</button>
+                </div>
+            </div>
             <p class="subtitulo">Selecciona una mesa</p>
             <div class="mesas-grid" id="mesasGrid"></div>
         </div>
@@ -206,10 +216,6 @@ function mostrarMesas(salon) {
         const card = document.createElement('div');
         card.className = `mesa-card ${tienePedido ? 'mesa-ocupada' : 'mesa-libre'}`;
         card.innerHTML = `
-            <div class="mesa-actions">
-                <button class="mesa-btn-action" onclick="event.stopPropagation(); renombrarMesa('${mesa}')" title="Renombrar">✏️</button>
-                <button class="mesa-btn-action" onclick="event.stopPropagation(); eliminarMesa('${mesa}')" title="Eliminar">🗑️</button>
-            </div>
             <div class="mesa-numero">${mesa}</div>
             <div class="mesa-estado">${tienePedido ? '📍 Ocupada' : '✅ Libre'}</div>
             ${tienePedido ? `<div class="mesa-total">${mesaActiva.total.toFixed(2)}€</div>` : ''}
@@ -1194,6 +1200,84 @@ async function borrarHistorial() {
         alert('✅ Historial borrado correctamente');
         mostrarHistorial();
     }
+}
+
+
+let modoEditarActivo = false;
+let modoBorrarActivo = false;
+
+function modoEditarMesa() {
+    if (modoEditarActivo) {
+        modoEditarActivo = false;
+        mostrarMesas(APP.salonActual);
+        return;
+    }
+    modoEditarActivo = true;
+    modoBorrarActivo = false;
+    
+    const grid = document.getElementById('mesasGrid');
+    if (!grid) return;
+    
+    Array.from(grid.children).forEach(card => {
+        const mesaNombre = card.querySelector('.mesa-numero').textContent;
+        card.style.border = '2px solid var(--dorado)';
+        card.onclick = (e) => {
+            e.stopPropagation();
+            renombrarMesa(mesaNombre);
+            modoEditarActivo = false;
+            mostrarMesas(APP.salonActual);
+        };
+    });
+}
+
+function modoBorrarMesa() {
+    if (modoBorrarActivo) {
+        modoBorrarActivo = false;
+        mostrarMesas(APP.salonActual);
+        return;
+    }
+    modoBorrarActivo = true;
+    modoEditarActivo = false;
+    
+    const grid = document.getElementById('mesasGrid');
+    if (!grid) return;
+    
+    Array.from(grid.children).forEach(card => {
+        const mesaNombre = card.querySelector('.mesa-numero').textContent;
+        card.style.border = '2px solid var(--rojo)';
+        card.onclick = (e) => {
+            e.stopPropagation();
+            eliminarMesa(mesaNombre);
+            modoBorrarActivo = false;
+            mostrarMesas(APP.salonActual);
+        };
+    });
+}
+
+
+let modoBorrarPersonaActivo = false;
+
+function modoBorrarPersona() {
+    if (modoBorrarPersonaActivo) {
+        modoBorrarPersonaActivo = false;
+        mostrarPersonas(APP.salonActual);
+        return;
+    }
+    modoBorrarPersonaActivo = true;
+    
+    const grid = document.querySelector('.personas-grid');
+    if (!grid) return;
+    
+    Array.from(grid.children).forEach(card => {
+        const nombrePersona = card.querySelector('.mesa-numero').textContent;
+        card.style.border = '2px solid var(--rojo)';
+        card.onclick = (e) => {
+            e.stopPropagation();
+            eliminarPersona(nombrePersona);
+            modoBorrarPersonaActivo = false;
+            mostrarPersonas(APP.salonActual);
+        };
+    });
 }
 
 // ============================================
