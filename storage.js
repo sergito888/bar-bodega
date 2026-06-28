@@ -25,6 +25,33 @@ class StorageManager {
     async guardarHistorial(mesaData) {
         if (this.supabase) {
             try {
+                // Calcular totales por método de pago
+                let pagoEfectivo = 0;
+                let pagoTarjeta = 0;
+                let pagoMetodo = 'efectivo';
+
+                if (mesaData.metodoPago) {
+                    if (mesaData.metodoPago.tipo === 'junto') {
+                        pagoMetodo = mesaData.metodoPago.metodo || 'efectivo';
+                        if (pagoMetodo === 'efectivo') {
+                            pagoEfectivo = mesaData.total;
+                        } else if (pagoMetodo === 'tarjeta') {
+                            pagoTarjeta = mesaData.total;
+                        } else if (pagoMetodo === 'mixto') {
+                            pagoEfectivo = mesaData.metodoPago.efectivo || 0;
+                            pagoTarjeta = mesaData.metodoPago.tarjeta || 0;
+                        }
+                    } else if (mesaData.metodoPago.tipo === 'separado' && mesaData.metodoPago.personas) {
+                        mesaData.metodoPago.personas.forEach(pers => {
+                            pagoEfectivo += parseFloat(pers.efectivo) || 0;
+                            pagoTarjeta += parseFloat(pers.tarjeta) || 0;
+                        });
+                        if (pagoEfectivo > 0 && pagoTarjeta > 0) pagoMetodo = 'mixto';
+                        else if (pagoTarjeta > 0) pagoMetodo = 'tarjeta';
+                        else pagoMetodo = 'efectivo';
+                    }
+                }
+
                 const { error } = await this.supabase
                     .from('historial_mesas')
                     .insert([{
@@ -34,6 +61,9 @@ class StorageManager {
                         productos: mesaData.productos,
                         total: mesaData.total,
                         metodo_pago: mesaData.metodoPago,
+                        pago_efectivo: pagoEfectivo,
+                        pago_tarjeta: pagoTarjeta,
+                        pago_metodo: pagoMetodo,
                         fecha_cierre: (() => {
                             const d = new Date(mesaData.fechaISO || new Date());
                             d.setHours(d.getHours() + 2);
@@ -64,6 +94,9 @@ class StorageManager {
                         productos: entry.productos,
                         total: parseFloat(entry.total),
                         metodoPago: entry.metodo_pago,
+                        pagoEfectivo: parseFloat(entry.pago_efectivo) || 0,
+                        pagoTarjeta: parseFloat(entry.pago_tarjeta) || 0,
+                        pagoMetodo: entry.pago_metodo || 'efectivo',
                         fecha: entry.fecha_cierre
                     }));
                 }

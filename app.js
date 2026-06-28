@@ -1029,6 +1029,9 @@ async function confirmarPago() {
     const mesaKey = getMesaKey();
     const tipo = document.querySelector('input[name="tipoPago"]:checked')?.value;
     let detallePago = { tipo, total: mesaData.total, fecha: new Date().toLocaleString('es-ES') };
+    let pagoEfectivo = 0;
+    let pagoTarjeta = 0;
+    let pagoMetodo = 'efectivo';
     
     if (tipo === 'junto') {
         detallePago.metodo = document.querySelector('input[name="metodoPago"]:checked')?.value;
@@ -1087,6 +1090,33 @@ async function confirmarPago() {
     }
     
     const ahora = new Date();
+
+    // Calcular resumen de pagos
+    if (tipo === 'junto') {
+        pagoMetodo = detallePago.metodo || 'efectivo';
+        if (pagoMetodo === 'efectivo') {
+            pagoEfectivo = mesaData.total;
+        } else if (pagoMetodo === 'tarjeta') {
+            pagoTarjeta = mesaData.total;
+        } else if (pagoMetodo === 'mixto') {
+            pagoEfectivo = parseFloat(document.getElementById('parteEfectivo')?.value) || 0;
+            pagoTarjeta = Math.max(0, mesaData.total - pagoEfectivo);
+        }
+    } else if (tipo === 'separado') {
+        const num = parseInt(document.getElementById('numPersonasPago')?.value) || 1;
+        for (let i = 0; i < num; i++) {
+            pagoEfectivo += parseFloat(document.getElementById('efectivoPersona_' + i)?.value) || 0;
+            pagoTarjeta += parseFloat(document.getElementById('tarjetaPersona_' + i)?.value) || 0;
+        }
+        if (pagoEfectivo > 0 && pagoTarjeta > 0) pagoMetodo = 'mixto';
+        else if (pagoTarjeta > 0) pagoMetodo = 'tarjeta';
+        else pagoMetodo = 'efectivo';
+    }
+
+    detallePago.efectivo = pagoEfectivo;
+    detallePago.tarjeta = pagoTarjeta;
+    detallePago.metodo = pagoMetodo;
+
     const historialEntry = {
         salon: APP.salonActual,
         mesa: nombreMesa,
@@ -1094,6 +1124,9 @@ async function confirmarPago() {
         productos: JSON.parse(JSON.stringify(mesaData.productos)),
         total: Number(mesaData.total.toFixed(2)),
         metodoPago: detallePago,
+        pagoEfectivo: pagoEfectivo,
+        pagoTarjeta: pagoTarjeta,
+        pagoMetodo: pagoMetodo,
         fecha: ahora.toLocaleString('es-ES'),
         fechaISO: ahora.toISOString()
     };
@@ -1166,7 +1199,29 @@ async function mostrarHistorial() {
                 productosDetalle = entry.productos.map(p => `<div class="historial-producto-item"><span>${p.cantidad || 1}x ${p.nombre || '?'} ${p.descripcion || ''}</span><span>${((p.precio || 0) * (p.cantidad || 1)).toFixed(2)}€</span></div>`).join('');
             }
             
-            html += `<div class="historial-item" onclick="toggleHistorialItem(${idx})"><div class="historial-header"><span>${salon.replace(/[🌿🏠🍸🛍️]\s*/, '')} - ${salon.includes('Para Llevar') ? '' : 'Mesa '}${mesa}</span><span>Turno ${turno}</span></div><div class="historial-fecha">${fecha}</div><div class="historial-total">${total.toFixed(2)}€</div><div class="historial-productos" id="histProd_${idx}">${productosDetalle || '<p style="color:var(--gris);font-size:0.8em">Sin detalle</p>'}</div></div>`;
+            // Construir resumen de pago
+            let pagoInfo = '';
+            const pagoEf = parseFloat(entry.pagoEfectivo) || 0;
+            const pagoTj = parseFloat(entry.pagoTarjeta) || 0;
+            const pagoMet = entry.pagoMetodo || (entry.metodoPago?.metodo) || '?';
+
+            if (pagoMet === 'efectivo') pagoInfo = '💵 Todo en efectivo';
+            else if (pagoMet === 'tarjeta') pagoInfo = '💳 Todo con tarjeta';
+            else if (pagoMet === 'mixto') pagoInfo = `🔄 Efectivo: ${pagoEf.toFixed(2)}€ | Tarjeta: ${pagoTj.toFixed(2)}€`;
+            else pagoInfo = '💵 Efectivo';
+
+            html += `<div class="historial-item" onclick="toggleHistorialItem(${idx})">
+                <div class="historial-header">
+                    <span>${salon.replace(/[🌿🏠🍸🛍️]\s*/, '')} - ${salon.includes('Para Llevar') ? '' : 'Mesa '}${mesa}</span>
+                    <span>Turno ${turno}</span>
+                </div>
+                <div class="historial-fecha">${fecha}</div>
+                <div class="historial-total">${total.toFixed(2)}€</div>
+                <div style="font-size:0.8em;color:var(--gris);margin-top:2px;">${pagoInfo}</div>
+                <div class="historial-productos" id="histProd_${idx}">
+                    ${productosDetalle || '<p style="color:var(--gris);font-size:0.8em">Sin detalle</p>'}
+                </div>
+            </div>`;
         });
     }
     
