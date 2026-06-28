@@ -46,7 +46,7 @@ function mostrarInicio() {
     const app = document.getElementById('app');
     app.innerHTML = `
         <div class="pantalla inicio">
-            <div class="header"><h1>🍷 Bar La Bodegaaaa</h1></div>
+            <div class="header"><h1>🍷 Bar La Bodega</h1></div>
             <p class="subtitulo">Selecciona un salón</p>
             <div class="salones-grid" id="salonesGrid"></div>
             <div class="botones-flotantes"><button class="btn-secundario" onclick="mostrarHistorial()">📋 Historial</button></div>
