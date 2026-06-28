@@ -1,0 +1,104 @@
+:root {
+    --negro: #000000; --negro-card: #111111; --negro-card-hover: #1a1a1a;
+    --vino: #722f37; --vino-claro: #8b3a42; --vino-oscuro: #5c1e24;
+    --blanco: #ffffff; --blanco-humo: #e0e0e0; --gris: #999999; --gris-oscuro: #555555;
+    --verde: #4caf84; --rojo: #e05555; --dorado: #c49a3c;
+    --sombra: 0 2px 8px rgba(255,255,255,0.05); --radio: 12px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--negro); color: var(--blanco); min-height: 100vh; max-width: 480px;
+    margin: 0 auto; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none;
+}
+#app { padding-bottom: 30px; min-height: 100vh; }
+::-webkit-scrollbar { width: 3px; } ::-webkit-scrollbar-track { background: var(--negro); } ::-webkit-scrollbar-thumb { background: var(--vino); border-radius: 3px; }
+
+.header { background: var(--negro-card); padding: 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--vino); position: sticky; top: 0; z-index: 100; }
+.header h1 { font-size: 1.2em; color: var(--blanco); } .header h2 { font-size: 1.1em; color: var(--blanco); flex: 1; text-align: center; }
+.subtitulo { text-align: center; color: var(--gris); padding: 10px; font-size: 0.9em; }
+
+.btn-volver { background: none; border: 1px solid var(--vino); color: var(--blanco); font-size: 1.2em; cursor: pointer; padding: 8px 12px; border-radius: 8px; min-width: 44px; text-align: center; } .btn-volver:active { background: var(--vino); }
+.btn-home { background: none; border: 1px solid var(--vino); font-size: 1.2em; cursor: pointer; padding: 8px 12px; border-radius: 8px; }
+.btn-primario { background: var(--vino); color: var(--blanco); border: none; padding: 12px 24px; border-radius: var(--radio); font-size: 1em; font-weight: bold; cursor: pointer; width: 100%; margin: 5px 0; transition: background 0.2s; } .btn-primario:active { background: var(--vino-oscuro); } .btn-primario:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-secundario { background: var(--negro-card); color: var(--blanco); border: 1px solid var(--vino); padding: 10px 20px; border-radius: var(--radio); cursor: pointer; font-size: 0.9em; } .btn-secundario:active { background: var(--vino); }
+.btn-pagar { background: var(--vino); color: var(--blanco); border: none; padding: 15px 24px; border-radius: var(--radio); font-size: 1.1em; font-weight: bold; cursor: pointer; width: 100%; margin: 5px 0; } .btn-pagar:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-grande { padding: 16px; font-size: 1.1em; } .btn-eliminar { background: none; border: none; font-size: 1.2em; cursor: pointer; padding: 5px; }
+.btn-agregar { background: var(--vino); color: var(--blanco); border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 1.3em; cursor: pointer; font-weight: bold; }
+.btn-peligro { background: var(--rojo); color: var(--blanco); border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 0.8em; }
+
+.salones-grid { display: flex; flex-direction: column; gap: 12px; padding: 15px; }
+.salon-card { background: var(--negro-card); padding: 22px; border-radius: var(--radio); border-left: 5px solid var(--vino); cursor: pointer; display: flex; align-items: center; gap: 15px; box-shadow: var(--sombra); transition: transform 0.15s; } .salon-card:active { transform: scale(0.97); background: var(--negro-card-hover); }
+.salon-icono { font-size: 2.5em; } .salon-nombre { font-size: 1.1em; font-weight: bold; flex: 1; color: var(--blanco); } .salon-mesas { color: var(--gris); font-size: 0.85em; }
+
+.mesas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; }
+.personas-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
+.mesa-card, .persona-card { background: var(--negro-card); padding: 14px 10px; border-radius: var(--radio); text-align: center; cursor: pointer; box-shadow: var(--sombra); transition: transform 0.15s; position: relative; } .mesa-card:active, .persona-card:active { transform: scale(0.95); }
+.mesa-numero { font-size: 1.2em; font-weight: bold; color: var(--blanco); } .mesa-estado { font-size: 0.7em; margin-top: 5px; }
+.mesa-ocupada, .persona-ocupada { border: 2px solid var(--vino-claro); } .mesa-ocupada .mesa-estado, .persona-ocupada .mesa-estado { color: var(--vino-claro); }
+.mesa-libre, .persona-libre { border: 2px solid var(--gris-oscuro); } .mesa-libre .mesa-estado, .persona-libre .mesa-estado { color: var(--verde); }
+.mesa-total { color: var(--blanco); font-weight: bold; margin-top: 4px; font-size: 0.8em; }
+.mesa-turno { background: var(--vino); color: var(--blanco); font-size: 0.65em; padding: 2px 8px; border-radius: 10px; margin-top: 4px; display: inline-block; }
+.mesa-actions { position: absolute; top: 5px; right: 5px; display: flex; gap: 3px; }
+.mesa-btn-action { background: var(--negro-card-hover); border: 1px solid var(--gris-oscuro); color: var(--gris); width: 24px; height: 24px; border-radius: 50%; font-size: 0.7em; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+.turno-badge { text-align: center; background: var(--vino); color: var(--blanco); padding: 8px; font-weight: bold; font-size: 0.85em; }
+.total-mesa { display: flex; justify-content: space-between; align-items: center; padding: 18px; background: var(--negro-card); margin: 10px 15px; border-radius: var(--radio); border: 2px solid var(--vino); } .total-mesa span:first-child { color: var(--blanco-humo); font-size: 1em; } .total-cifra { font-size: 1.8em; font-weight: bold; color: var(--blanco); }
+.productos-lista { padding: 10px 15px; max-height: 50vh; overflow-y: auto; }
+.producto-item { display: flex; align-items: center; gap: 8px; background: var(--negro-card); padding: 10px; border-radius: 8px; margin-bottom: 6px; border-left: 3px solid var(--vino); }
+.producto-info { flex: 1; min-width: 0; } .producto-nombre { font-weight: bold; font-size: 0.9em; color: var(--blanco); } .producto-desc { font-size: 0.75em; color: var(--gris); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.producto-cantidad { display: flex; align-items: center; gap: 6px; } .producto-cantidad button { background: var(--negro); color: var(--blanco); border: 1px solid var(--vino); width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 0.9em; } .producto-cantidad span { min-width: 20px; text-align: center; color: var(--blanco); } .producto-precio { font-weight: bold; color: var(--blanco); min-width: 50px; text-align: right; font-size: 0.9em; }
+.botones-accion { padding: 12px 15px; display: flex; flex-direction: column; gap: 8px; } .botones-flotantes { padding: 15px; text-align: center; } .vacio { text-align: center; color: var(--gris); padding: 30px; font-style: italic; }
+.mesa-juntada-info { background: var(--vino-oscuro); color: var(--blanco); text-align: center; padding: 8px; font-size: 0.85em; font-weight: bold; border-radius: 6px; margin: 5px 10px; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+.mesa-juntada-tag { background: var(--vino); padding: 3px 8px; border-radius: 10px; font-size: 0.8em; }
+
+.categorias-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
+.categoria-card { background: var(--negro-card); padding: 18px 12px; border-radius: var(--radio); text-align: center; cursor: pointer; box-shadow: var(--sombra); transition: transform 0.15s; border: 1px solid transparent; } .categoria-card:active { transform: scale(0.95); border-color: var(--vino); } .categoria-libre { border: 2px dashed var(--vino); }
+.categoria-icono { font-size: 2.2em; margin-bottom: 6px; } .categoria-nombre { font-weight: bold; font-size: 0.85em; color: var(--blanco); }
+.subcategorias-lista { padding: 12px; } .subcategoria-seccion { margin-bottom: 10px; }
+.subcategoria-seccion h3 { color: var(--blanco); margin: 12px 0 8px 0; font-size: 0.95em; padding: 6px 10px; background: var(--vino-oscuro); border-radius: 6px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; } .subcategoria-seccion h3::after { content: '▼'; font-size: 0.7em; transition: transform 0.2s; } .subcategoria-seccion h3.abierto::after { transform: rotate(180deg); }
+.producto-card { display: flex; justify-content: space-between; align-items: center; background: var(--negro-card); padding: 12px; border-radius: 8px; margin-bottom: 6px; cursor: pointer; border-left: 3px solid transparent; transition: border-color 0.15s; } .producto-card:active { border-left-color: var(--vino); background: var(--negro-card-hover); } .producto-card span:first-child { color: var(--blanco); font-size: 0.9em; }
+.precio-tag { background: var(--vino); color: var(--blanco); padding: 4px 10px; border-radius: 12px; font-weight: bold; font-size: 0.8em; white-space: nowrap; }
+.productos-subcategoria { display: none; } .productos-subcategoria.visible { display: block; }
+.formatos-lista { display: flex; flex-direction: column; gap: 6px; padding: 8px 0; } .formato-item { display: flex; justify-content: space-between; align-items: center; background: var(--negro-card); padding: 12px; border-radius: 8px; cursor: pointer; border-left: 3px solid transparent; } .formato-item:active { border-left-color: var(--vino); background: var(--negro-card-hover); }
+
+.extras-form { padding: 15px; } .extras-form h3 { color: var(--blanco); margin-bottom: 10px; font-size: 1em; } .extras-form label { display: block; margin: 8px 0 4px; color: var(--gris); font-size: 0.85em; }
+.contador-personas { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 10px 0; } .contador-personas button { background: var(--vino); color: var(--blanco); border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.3em; cursor: pointer; } .contador-personas span { font-size: 1.5em; font-weight: bold; min-width: 40px; text-align: center; }
+.extras-form input[type="number"] { width: 70px; padding: 10px; background: var(--negro-card); border: 1px solid var(--vino); color: var(--blanco); border-radius: 8px; font-size: 1em; text-align: center; }
+.extras-lista { margin: 12px 0; }
+.extra-item { display: flex; align-items: center; gap: 10px; padding: 10px; background: var(--negro-card); border-radius: 8px; margin-bottom: 6px; cursor: pointer; border: 1px solid transparent; } .extra-item:has(input:checked) { border-color: var(--vino); } .extra-item input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--vino); } .extra-item span:first-of-type { flex: 1; color: var(--blanco); font-size: 0.9em; }
+.extra-personalizada { background: var(--negro-card); padding: 10px; border-radius: 8px; margin-bottom: 8px; } .extra-personalizada h4 { color: var(--blanco); font-size: 0.85em; margin-bottom: 8px; }
+.extra-opciones { display: flex; gap: 10px; margin-bottom: 6px; } .extra-opciones label { display: flex; align-items: center; gap: 5px; cursor: pointer; color: var(--gris); font-size: 0.85em; } .extra-opciones input[type="radio"] { accent-color: var(--vino); }
+.persona-extra-item { display: flex; align-items: center; gap: 8px; padding: 6px; margin-bottom: 4px; font-size: 0.8em; } .persona-extra-item span { color: var(--gris); min-width: 70px; } .persona-extra-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--vino); }
+.precio-total-extras { text-align: center; font-size: 1.2em; padding: 15px; color: var(--blanco); } .precio-total-extras strong { color: var(--blanco); }
+
+.pago-resumen { background: var(--negro-card); margin: 10px 15px; padding: 12px; border-radius: var(--radio); max-height: 30vh; overflow-y: auto; } .pago-resumen h4 { color: var(--blanco); margin-bottom: 10px; font-size: 0.95em; border-bottom: 1px solid var(--vino); padding-bottom: 6px; } .pago-resumen-item { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.8em; color: var(--blanco-humo); } .pago-resumen-item span:last-child { color: var(--blanco); font-weight: bold; }
+.pago-total { text-align: center; font-size: 1.3em; padding: 18px; background: var(--negro-card); margin: 10px 15px; border-radius: var(--radio); border: 2px solid var(--vino); } .pago-total strong { color: var(--blanco); }
+.pago-metodos, .pago-division { padding: 10px 15px; } .pago-metodos h3, .pago-division h3 { color: var(--blanco); margin-bottom: 8px; font-size: 1em; }
+.metodos-opciones { display: flex; flex-direction: column; gap: 8px; }
+.metodo-option { display: flex; align-items: center; gap: 10px; padding: 12px; background: var(--negro-card); border-radius: 8px; cursor: pointer; border: 1px solid transparent; color: var(--blanco); } .metodo-option:has(input:checked) { border-color: var(--vino); } .metodo-option input { accent-color: var(--vino); }
+.pago-division input { width: 70px; padding: 10px; background: var(--negro-card); border: 1px solid var(--vino); color: var(--blanco); border-radius: 8px; text-align: center; font-size: 1em; margin: 8px 0; }
+#divisionDetalle { margin-top: 10px; }
+.persona-pago { background: var(--negro-card); padding: 10px; border-radius: 8px; margin-bottom: 8px; border: 1px solid transparent; } .persona-pago.pagada { border-color: var(--verde); opacity: 0.8; } .persona-pago-header { display: flex; justify-content: space-between; align-items: center; } .persona-pago-header span { color: var(--blanco); font-weight: bold; font-size: 0.9em; } .persona-pago-monto { color: var(--blanco); font-size: 0.85em; margin: 5px 0; }
+.persona-pago-metodos { display: flex; gap: 10px; margin-top: 8px; } .persona-pago-metodos input { width: 80px; padding: 6px; background: var(--negro); border: 1px solid var(--gris-oscuro); color: var(--blanco); border-radius: 6px; font-size: 0.8em; } .persona-pago-metodos label { color: var(--gris); font-size: 0.75em; }
+.tick-pagado { display: flex; align-items: center; gap: 5px; cursor: pointer; color: var(--gris); font-size: 0.8em; } .tick-pagado input { width: 18px; height: 18px; accent-color: var(--verde); }
+.efectivo-cambio { padding: 10px 15px; } .efectivo-cambio input { width: 110px; padding: 10px; background: var(--negro-card); border: 1px solid var(--vino); color: var(--blanco); border-radius: 8px; font-size: 1em; } #cambioDiv { margin-top: 12px; text-align: center; font-size: 1.2em; color: var(--blanco); } #cambioCantidad { color: var(--verde); font-weight: bold; }
+.pago-mixto { padding: 10px 15px; } .pago-mixto label { color: var(--gris); font-size: 0.85em; display: block; margin-top: 8px; } .pago-mixto input { width: 100px; padding: 8px; background: var(--negro-card); border: 1px solid var(--gris-oscuro); color: var(--blanco); border-radius: 6px; margin: 4px 0; }
+.info-pago { text-align: center; color: var(--gris); padding: 15px; }
+.cambio-individual { margin-top: 10px; padding: 10px; background: var(--negro-card); border-radius: 8px; } .cambio-individual h4 { color: var(--blanco); font-size: 0.85em; margin-bottom: 6px; } .cambio-item { display: flex; justify-content: space-between; font-size: 0.8em; color: var(--blanco-humo); padding: 2px 0; } .cambio-item span:last-child { color: var(--verde); font-weight: bold; }
+.btn-guardar-pago { background: var(--negro-card); color: var(--gris); border: 1px solid var(--gris-oscuro); padding: 10px; border-radius: var(--radio); cursor: pointer; font-size: 0.85em; width: 100%; margin: 5px 0; }
+
+.juntar-form { padding: 20px; text-align: center; } .juntar-form p { color: var(--blanco); margin-bottom: 10px; } .juntar-form label { color: var(--gris); display: block; margin-bottom: 5px; }
+.juntar-form select { width: 150px; padding: 12px; background: var(--negro-card); border: 1px solid var(--vino); color: var(--blanco); border-radius: 8px; font-size: 1em; margin: 10px; }
+.mesas-juntadas-lista { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin: 10px 0; }
+.mesa-juntada-chip { background: var(--vino); color: var(--blanco); padding: 6px 12px; border-radius: 15px; font-size: 0.85em; display: flex; align-items: center; gap: 5px; }
+.mesa-juntada-chip button { background: none; border: none; color: var(--blanco); cursor: pointer; font-size: 0.9em; padding: 0 2px; }
+
+.historial-lista { padding: 15px; }
+.historial-item { background: var(--negro-card); padding: 15px; border-radius: var(--radio); margin-bottom: 10px; border-left: 4px solid var(--vino); cursor: pointer; } .historial-item:active { background: var(--negro-card-hover); }
+.historial-header { display: flex; justify-content: space-between; font-weight: bold; color: var(--blanco); font-size: 0.95em; } .historial-fecha { font-size: 0.75em; color: var(--gris); margin: 4px 0; } .historial-total { font-size: 1.1em; font-weight: bold; text-align: right; color: var(--blanco); }
+.historial-productos { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--vino); } .historial-productos.visible { display: block; } .historial-producto-item { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.8em; color: var(--blanco-humo); border-bottom: 1px solid rgba(255,255,255,0.05); } .historial-producto-item span:last-child { font-weight: bold; color: var(--blanco); }
+
+@media (min-width: 480px) { body { border-left: 1px solid var(--vino); border-right: 1px solid var(--vino); } }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.pantalla { animation: fadeIn 0.2s ease-out; }
