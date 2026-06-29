@@ -1,6 +1,6 @@
 const CONFIG_SALONES_DEFAULT = {
     "🌿 Terraza": { mesas: ["T1","T2","T3","T4","T5","T6","T7","T8","T9","T10","T11","T12","T13","Puri"], color: "#722f37", tipo: "mesas" },
-    "🏠 Salón": { mesas: ["S1","S2","S3","S4","S5","S6","S7","S8","Barril"], color: "#8b3a42", tipo: "mesas" },
+    "🏠 Salón": { mesas: ["S1","S2","S3","S4","S5","S6","S7","S8","Tonel"], color: "#8b3a42", tipo: "mesas" },
     "🍸 Barra": { mesas: ["B1"], color: "#5c1e24", tipo: "mesas" },
     "🛍️ Para Llevar": { mesas: [], color: "#9b4d55", tipo: "personas" }
 };
