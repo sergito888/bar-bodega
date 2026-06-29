@@ -1,3 +1,5 @@
+cd "C:\Users\sergi\OneDrive\Escritorio\Cosas de Sergio\Cosas creadas por mí\bar-bodega"
+
 git add .
 
 git commit -m "Cambio"

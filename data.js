@@ -19,7 +19,7 @@ let INGREDIENTES_LIBRES = [
 
 const PRECIOS_PAN_BOCADILLO = {
     "Montadito": { normal: 1, sinGluten: 1.5 },
-    "Medio Bocadillo": { normal: 1.5, sinGluten: 2 },
+    "Medio Bocadillo": { normal: 1.5, sinGluten: 2 },    // NO ES DEFINITIVO
     "Bocadillo": { normal: 2, sinGluten: 3 },
     "Tostada": { normal: 2, sinGluten: 3 }
 };
@@ -170,7 +170,7 @@ const CARTA = {
     "🍞 Pan": { icono: "🍞", subcategorias: { "Pan": [
         { nombre: "Pan normal", precio: 1 }, { nombre: "Pan sin gluten", precio: 2 }
     ]}},
-    "📋 Menús": { icono: "📋", subcategorias: { "Menús": [
+    "📋 Menús": { icono: "📋", subcategorias: { "Menús": [   // NO ES DEFINITIVO
         { nombre: "Menú Barato", precio: 15, esMenu: true, tipoMenu: "barato", descripcion: "Barra libre limitada", incluye: ["Refresco", "Caña", "Tinto de verano", "Agua pequeña"] },
         { nombre: "Menú Caro", precio: 25, esMenu: true, tipoMenu: "caro", descripcion: "Barra libre completa", incluye: ["Refresco", "Caña", "Copa de cerveza", "Tinto de verano", "Vermut", "Cubata", "Chupito"] }
     ]}},
