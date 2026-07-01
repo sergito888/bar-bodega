@@ -610,7 +610,7 @@ function actualizarPrecioMenu(precioU) { document.getElementById('precioTotalMen
 
 function confirmarMenu(nombre, precioU, incluye, tipo) {
     const num = parseInt(document.getElementById('numPersonasMenu').value) || 1;
-    agregarProducto({ nombre, precio: precioU * num, cantidad: 1, descripcion: `${num} pers. - Incluye: ${incluye.join(', ')} (${tipo})` });
+    agregarProducto({ nombre, precio: precioU, cantidad: num, descripcion: `Incluye: ${incluye.join(', ')} (${tipo})` });
     if (APP.quedarseEnCategoria) { APP.pantallaAnterior = ['categorias']; mostrarSubcategorias("📋 Menús"); }
     else { APP.pantallaAnterior = ['mesas']; mostrarPedidoMesa(); }
 }
