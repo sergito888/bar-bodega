@@ -171,8 +171,8 @@ const CARTA = {
         { nombre: "Pan normal", precio: 1 }, { nombre: "Pan sin gluten", precio: 2 }
     ]}},
     "📋 Menús": { icono: "📋", subcategorias: { "Menús": [   // NO ES DEFINITIVO
-        { nombre: "Menú Barato", precio: 15, esMenu: true, tipoMenu: "barato", descripcion: "Barra libre limitada", incluye: ["Refresco", "Caña", "Tinto de verano", "Agua pequeña"] },
-        { nombre: "Menú Caro", precio: 25, esMenu: true, tipoMenu: "caro", descripcion: "Barra libre completa", incluye: ["Refresco", "Caña", "Copa de cerveza", "Tinto de verano", "Vermut", "Cubata", "Chupito"] }
+        { nombre: "Menú Barato", precio: 18, esMenu: true, tipoMenu: "barato", descripcion: "Barra libre limitada", incluye: ["Cerveza de barril", "Agua"] },
+        { nombre: "Menú Caro", precio: 23, esMenu: true, tipoMenu: "caro", descripcion: "Barra libre completa", incluye: ["Cerveza de barril", "Tercios estrella levante", "Agua", "Refrescos", "Vino barahonda Organic", "Vino consentido", "Vino solanera", "Vino barahonda blanco organic", "Vino macabeo", "Vino castaño dominio espiral"] }
     ]}},
     "📝 Categoría Libre": { icono: "📝", subcategorias: { "Productos libres": [
         { nombre: "Huevo frito", precio: 0.5 }, { nombre: "Bacon", precio: 0.5 },
